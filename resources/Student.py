@@ -82,7 +82,12 @@ class StudentUpdate(BD, Resource):
 	        FROM estudiante AS e 
 	        INNER JOIN carrera AS c ON (e.id_carrera = c.id)
 	        INNER JOIN facultad AS f ON (c.id_facultad = f.id)"""))
-            response = {"facultad": resultfaculty, "carrera": resultProfession, "estudiante": resultStudent, "estudiante-carrera-facultad": resultRelationship}
+            response = {
+                "hechos-estudiante-carrera-facultad": {"items": resultRelationship},
+                "dim-facultad": {"items": resultfaculty}, 
+                "dim-carrera": {"items":resultProfession}, 
+                "dim-estudiante": {"items": resultStudent}
+            }  
             
         except DatabaseError as e:
             abort(500, message="{0}:{1}".format(e.__class__.__name__, e.__str__()))
