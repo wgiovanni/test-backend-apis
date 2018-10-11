@@ -3,8 +3,9 @@ import simplejson as json
 from psycopg2 import DatabaseError
 from textwrap import dedent
 from common.BD import BD
-from flask import make_response, jsonify
+from flask import make_response, jsonify, request
 from datetime import datetime
+
 
 class StudentInsertInitial(BD, Resource):
     representations = {'application/json': make_response}
@@ -95,3 +96,8 @@ class StudentUpdate(BD, Resource):
             abort(500, message="{0}:{1}".format(e.__class__.__name__, e.__str__()))
 
         return jsonify(response), 200, { 'Access-Control-Allow-Origin': '*' }
+
+
+
+    
+
