@@ -72,14 +72,14 @@ class TeacherInsertInitial(BD, Resource):
                         r2['facultad'] = r1['facultad']
 
             
-            
 
             response = {
                 "dim-docente": {"items": resultTeacher},
                 "dim-facultad": {"items": resultfaculty},
                 "dim-publicacion": {"items": resultPublication},
                 "dim-escalafon": {"items": resultScale}, 
-                "hechos-docente-publicacion": {"items": resultRelationship}
+                "hechos-docente-publicacion": {"items": resultRelationship},
+                "hechos-docente-facultad": {"items": resultTeacherFaculty}
             }  
         except DatabaseError as e:
             abort(500, message="{0}:{1}".format(e.__class__.__name__, e.__str__()))
