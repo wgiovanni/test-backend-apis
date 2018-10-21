@@ -9,7 +9,7 @@ import simplejson as json
 
 # Resources
 from resources.Student import StudentInsertInitial, StudentUpdate
-from resources.Teacher import TeacherInsertInitial
+from resources.Teacher import TeacherInsertInitial, TeacherUpdate
 
 UPLOAD_FOLDER = 'C:/Users\wilke/Desktop/flask-vue'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'xlsx'])
@@ -49,6 +49,7 @@ class File(Resource):
 api.add_resource(StudentInsertInitial, '/estudiantes')
 api.add_resource(StudentUpdate, '/estudiantes/<date_update>')
 api.add_resource(TeacherInsertInitial, '/profesores')
+api.add_resource(TeacherUpdate, '/profesores/<date_update>')
 api.add_resource(File, '/upload')
 
 

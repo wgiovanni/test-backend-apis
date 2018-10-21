@@ -21,7 +21,7 @@ class StudentInsertInitial(BD, Resource):
 
             # consultar estudiantes
             resultStudent = self.queryAll(dedent("""\
-            SELECT cedula, nacionalidad, nombre, apellido, sexo, fecha_nacimiento, telefono1, telefono2, email, edo_procedencia 
+            SELECT cedula, nacionalidad, nombre, apellido, sexo, fecha_nacimiento, telefono1, telefono2, correo, edo_procedencia 
             FROM estudiante"""))
             studentList = []
             for row in resultStudent:
@@ -62,15 +62,15 @@ class StudentUpdate(BD, Resource):
             date_update = datetime.strptime(date_update, '%Y-%m-%d %H:%M:%S')
             print(date_update)
             # consultar facultad
-            resultfaculty = self.queryAll(dedent("""SELECT nombre FROM facultad WHERE updated_date = %s"""), [date_update])
+            resultfaculty = self.queryAll(dedent("""SELECT nombre FROM facultad WHERE fecha_actualizacion >= %s"""), [date_update])
             # consultar carrera
-            resultProfession = self.queryAll(dedent("""SELECT nombre, tipo FROM carrera WHERE updated_date = %s"""), [date_update])
+            resultProfession = self.queryAll(dedent("""SELECT nombre, tipo FROM carrera WHERE fecha_actualizacion >= %s"""), [date_update])
 
             # consultar estudiantes
             resultStudent = self.queryAll(dedent("""\
-            SELECT cedula, nacionalidad, nombre, apellido, sexo, fecha_nacimiento, telefono1, telefono2, email, edo_procedencia 
+            SELECT cedula, nacionalidad, nombre, apellido, sexo, fecha_nacimiento, telefono1, telefono2, correo, edo_procedencia 
             FROM estudiante
-            WHERE updated_date >= %s"""), [date_update])
+            WHERE fecha_actualizacion >= %s"""), [date_update])
             studentList = []
             for row in resultStudent:
                 row['fecha_nacimiento'] = row['fecha_nacimiento'].strftime('%Y-%m-%d')
