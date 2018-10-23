@@ -185,7 +185,13 @@ INSERT INTO public.eguc_egresado(
             'No se', 'descripcion', 'programar', '....', 'wmorillo@gmail,com', '746574323', 
             '146498766');
 
-
+INSERT INTO public.eguc_egresado(
+            "nombreUsuario", "primerNombre", "segundoNombre", "primerApellido", 
+            "segundoApellido", descripcion, intereses, foto, email, telefono, 
+            identificacion)
+    VALUES ('wgiovanni', 'Wilkel', 'Alejandro', 'Giovanni', 
+            'Perozo', 'descripcion', 'programar', '....', 'wgiovanni@gmail,com', '746574323', 
+            '22422883');
 
 
 
@@ -212,3 +218,88 @@ INSERT INTO public.eguc_estudiosuc(
             egresado_id)
     VALUES ('Ciencias y Tecnología', 'Química', '2010-07-24', 'Licenciado en Química', 'url...', 
             3);
+
+
+
+
+INSERT INTO public.eguc_certificacion(
+            "nombreCertificacion", descripcion, "urlCertificacion", egresado_id)
+    VALUES ('Certificacion1', 'descripcion', 'url xxx', 3);
+
+INSERT INTO public.eguc_certificacion(
+            "nombreCertificacion", descripcion, "urlCertificacion", egresado_id)
+    VALUES ('Certificacion2', 'descripcion', 'url xxx', 4);
+
+INSERT INTO public.eguc_certificacion(
+            "nombreCertificacion", descripcion, "urlCertificacion", egresado_id)
+    VALUES ('Certificacion3', 'descripcion', 'url certificacion', 4);
+
+
+
+INSERT INTO public.eguc_cursos(
+            nombre, url, egresado_id)
+    VALUES ('Programación basica', 'http://platzi.com/programacionbasica', 4);
+INSERT INTO public.eguc_cursos(
+            nombre, url, egresado_id)
+    VALUES ('Curso basico PHP', 'http://platzi.com/wgiovanni/phpbasico', 4);
+INSERT INTO public.eguc_cursos(
+            nombre, url, egresado_id)
+    VALUES ('Curso Java', 'http://platzi.com/java', 4);
+
+INSERT INTO public.eguc_cursos(
+            nombre, url, egresado_id)
+    VALUES ('Curso Angular', 'http://platzi.com/angular', 1);
+INSERT INTO public.eguc_cursos(
+            nombre, url, egresado_id)
+    VALUES ('Curso basico PHP', 'http://platzi.com/lgomez/phpbasico', 2);
+
+
+INSERT INTO public.eguc_educacion(
+	    instituto, "campoEstudio", "tituloObtenido", "urlCertificacion", 
+            egresado_id)
+    VALUES ('Instituto1', 'Campo de Estudio1', 'Titulo1', 'http://urlcertificacion.com', 2);
+
+INSERT INTO public.eguc_educacion(
+	    instituto, "campoEstudio", "tituloObtenido", "urlCertificacion", 
+            egresado_id)
+    VALUES ('Instituto2', 'Campo de Estudio2', 'Titulo2', 'http://urlcertificacion.com', 2);
+
+INSERT INTO public.eguc_educacion(
+	    instituto, "campoEstudio", "tituloObtenido", "urlCertificacion", 
+            egresado_id)
+    VALUES ('Instituto3', 'Campo de Estudio3', 'Titulo3', 'http://urlcertificacion.com', 3);
+
+
+
+INSERT INTO public.eguc_patentes(
+            titulo, descripcion, numero, inventores, fecha, url, egresado_id)
+    VALUES ('Patente1', 'Descripcion Patente1', '5151', 'inventor1, inventor2, inventor3', '2018-07-10', 'url', 4);
+INSERT INTO public.eguc_patentes(
+            titulo, descripcion, numero, inventores, fecha, url, egresado_id)
+    VALUES ('Patente2', 'Descripcion Patente1', '987874', 'inventor1, inventor2, inventor3', '2018-07-10', 'url', 1);
+
+
+
+INSERT INTO public.eguc_trabajos(
+            "nombreEmpresa", cargo, descripcion, egresado_id)
+    VALUES ('Intelix', 'Programador web', 'descripcion', 4);
+INSERT INTO public.eguc_trabajos(
+            "nombreEmpresa", cargo, descripcion, egresado_id)
+    VALUES ('Promotora Tantalo', 'Programador web', 'descripcion', 4);
+
+INSERT INTO public.eguc_trabajos(
+            "nombreEmpresa", cargo, descripcion, egresado_id)
+    VALUES ('Sofos', 'Programador web', 'descripcion', 2);
+
+
+
+INSERT INTO public.eguc_voluntariado(
+            organizacion, descripcion, causa, egresado_id)
+    VALUES ('Organizacion1', 'descripcion', 'una causa ahi', 3);
+INSERT INTO public.eguc_voluntariado(
+            organizacion, descripcion, causa, egresado_id)
+    VALUES ('Organizacion2', 'descripcion', 'una causa ahi2', 1);
+
+INSERT INTO public.eguc_voluntariado(
+            organizacion, descripcion, causa, egresado_id)
+    VALUES ('Organizacion3', 'descripcion', 'una causa ahi2', 1);
