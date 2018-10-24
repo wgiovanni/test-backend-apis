@@ -159,9 +159,9 @@ class GraduateInsertInitial(BD, Resource):
                 "hechos-egresado-certificacion": {"items": resultRelationshipGraduateCertification},
                 "hechos-egresado-cursos": {"items": resultRelationshipGraduateCourse},
                 "hechos-egresado-educacion": {"items": resultRelationshipGraduateEducation},
-                "hechos-egresados-patentes": {"items": resultRelationshipGraduatePatents},
-                "hechos-egresados-trabajos": {"items": resultRelationshipGraduateJobs},
-                "hechos-egresados-voluntariado": {"items": resultRelationshipGraduateVolunteering}
+                "hechos-egresado-patentes": {"items": resultRelationshipGraduatePatents},
+                "hechos-egresado-trabajos": {"items": resultRelationshipGraduateJobs},
+                "hechos-egresado-voluntariado": {"items": resultRelationshipGraduateVolunteering}
             }  
         except DatabaseError as e:
             abort(500, message="{0}:{1}".format(e.__class__.__name__, e.__str__()))
