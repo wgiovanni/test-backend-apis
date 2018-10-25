@@ -18,7 +18,7 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'xlsx'])
 
 # instantiate the app
 app = Flask(__name__)
-api = Api(app)
+api = Api(app, prefix="/api/v1")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # enable CORS
 CORS(app)
