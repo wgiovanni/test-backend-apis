@@ -37,7 +37,7 @@ CREATE INDEX fki_id_escalafon
   USING btree
   (id_escalafon);
 
-
+/*
 INSERT INTO public.docente(
             cedula, nombre, apellido, correo, grado, area_trabajo, sexo, 
             num_citaciones, id_escalafon)
@@ -54,7 +54,49 @@ INSERT INTO public.docente(
             cedula, nombre, apellido, correo, grado, area_trabajo, sexo, 
             num_citaciones, id_escalafon)
     VALUES ('545511', 'Marilyn', 'Guigni', 'marilyngiugni@gmail.com', 'maestria y especializacion', 'investigacion', 'Femenino', 232, 5);
+*/
+INSERT INTO public.docente(
+            cedula, primernombre, primerapellido, correo, areadeinvestigacion, 
+            sexo, nacionalidad, segundonombre, 
+            segundoapellido, facultad, tipo, escalafon)
+    VALUES ('11356034', 'Mirella', 'Herrera', 
+            'mirella.herrera@gmail.com', 'investigacion', 'F', 'V', 'SegundoNombre', 
+            'Segundoapellido', 'Ciencias y Tecnología', 'Investigacion', 'Titular');
 
+INSERT INTO public.docente(
+            cedula, primernombre, primerapellido, correo, areadeinvestigacion, 
+            sexo, nacionalidad, segundonombre, 
+            segundoapellido, facultad, tipo, escalafon)
+    VALUES ('1515515', 'Dessiree', 'Delgado', 
+            'desidelgado@gmail.com', 'investigacion', 'F', 'V', 'SegundoNombre', 
+            'Segundoapellido', 'Ciencias y Tecnología', 'Investigacion', 'Titular');
+
+
+
+INSERT INTO public.docente(
+            cedula, primernombre, primerapellido, correo, areadeinvestigacion, 
+            sexo, nacionalidad, segundonombre, 
+            segundoapellido, facultad, tipo, escalafon)
+    VALUES ('545511', 'Marilyn', 'Guigni', 
+            'marilyngiugni@gmail.com', 'investigacion', 'F', 'V', 'SegundoNombre', 
+            'Segundoapellido', 'Ciencias y Tecnología', 'Investigacion', 'Asociado');
+
+
+INSERT INTO public.docente(
+            cedula, primernombre, primerapellido, correo, areadeinvestigacion, 
+            sexo, nacionalidad, segundonombre, 
+            segundoapellido, facultad, tipo, escalafon)
+    VALUES ('226555', 'Pero', 'Linares', 
+            'pedro@gmail.com', 'investigacion', 'M', 'E', 'SegundoNombre', 
+            'Segundoapellido', 'Ingeniería', 'Investigacion', 'Asociado');         
+
+INSERT INTO public.docente(
+            cedula, primernombre, primerapellido, correo, areadeinvestigacion, 
+            sexo, nacionalidad, segundonombre, 
+            segundoapellido, facultad, tipo, escalafon)
+    VALUES ('123456788', 'Alguien ahi', 'Alguien ahi', 
+            'alguienahi@gmail.com', 'investigacion', 'f', 'e', 'SegundoNombre', 
+            'Segundoapellido', 'Odontología', 'Investigacion', 'Asistente');
 
 -- Table: public.escalon
 
@@ -115,7 +157,7 @@ WITH (
 ALTER TABLE public.otro_estudio
   OWNER TO postgres;
 
-
+/*
 INSERT INTO public.otro_estudio(
             descripcion, institucion)
     VALUES ('Estudio1', 'Universidad de Carabobo');
@@ -132,7 +174,25 @@ INSERT INTO public.otro_estudio(
             descripcion, institucion)
     VALUES ('Estudio4', 'Universidad de Chile');
 
+*/
+INSERT INTO public.otro_estudio(
+            cedulaautor, nomtitulo)
+    VALUES ('11356034', 'Estudio1');
 
+INSERT INTO public.otro_estudio(
+            cedulaautor, nomtitulo)
+    VALUES ('11356034', 'Estudio2');
+
+INSERT INTO public.otro_estudio(
+            cedulaautor, nomtitulo)
+    VALUES ('11356034', 'Estudio3');
+
+INSERT INTO public.otro_estudio(
+            cedulaautor, nomtitulo)
+    VALUES ('1515515', 'Estudio4');
+INSERT INTO public.otro_estudio(
+            cedulaautor, nomtitulo)
+    VALUES ('1515515', 'Estudio5');
 -- Table: public.premio
 
 -- DROP TABLE public.premio;
@@ -152,7 +212,7 @@ WITH (
 );
 ALTER TABLE public.premio
   OWNER TO postgres;
-
+/*
 INSERT INTO public.premio(
             nombre_premio, institucion)
     VALUES ('Mejor profesor', 'Universidad de Carabobo');
@@ -169,6 +229,24 @@ INSERT INTO public.premio(
             nombre_premio, institucion)
     VALUES ('Mejor publicacion 2019', 'Universidad de los Carabobo');
 
+*/
+
+INSERT INTO public.premio(
+            nombre, cedulaautor)
+    VALUES ('Mejor profesor', '226555');
+
+
+INSERT INTO public.premio(
+            nombre, cedulaautor)
+    VALUES ('Mejor Investigador 2016', '11356034');
+    
+INSERT INTO public.premio(
+            nombre, cedulaautor)
+    VALUES ('Mejor publicacion 2018', '11356034');
+
+INSERT INTO public.premio(
+            nombre, cedulaautor)
+    VALUES ('Mejor publicacion 2019', '1515515');
 
 -- Table: public.proyecto
 
@@ -189,7 +267,7 @@ WITH (
 ALTER TABLE public.proyecto
   OWNER TO postgres;
 
-
+/*
 INSERT INTO public.proyecto(
             titulo, tipo)
     VALUES ('Proyecto1', 'Investigacion');
@@ -205,7 +283,22 @@ INSERT INTO public.proyecto(
 INSERT INTO public.proyecto(
             titulo, tipo)
     VALUES ('Proyecto4', 'Otro tipo');
+*/
+INSERT INTO public.proyecto(
+            cedulaautor, titulo)
+    VALUES ('545511', 'Proyecto1');
 
+INSERT INTO public.proyecto(
+            cedulaautor, titulo)
+    VALUES ('545511', 'Proyecto2');
+
+INSERT INTO public.proyecto(
+            cedulaautor, titulo)
+    VALUES ('11356034', 'Proyecto3');
+
+INSERT INTO public.proyecto(
+            cedulaautor, titulo)
+    VALUES ('226555', 'Proyecto4');
 -- Table: public.publicacion
 
 -- DROP TABLE public.publicacion;
@@ -228,7 +321,7 @@ WITH (
 ALTER TABLE public.publicacion
   OWNER TO postgres;
 
-
+/*
 INSERT INTO public.publicacion(
             tipo, autor, titulo, fecha, revista)
     VALUES ('Tipo1', 'Mirella Herrera', 'Titulo de la publicacion1', '2012-05-30', 'Revista Cientifica');
@@ -241,6 +334,25 @@ INSERT INTO public.publicacion(
 INSERT INTO public.publicacion(
             tipo, autor, titulo, fecha, revista)
     VALUES ('Tipo2', 'Desiree Delgado', 'Titulo de la publicacion3', '2014-10-10', 'Revista Cientifica');
+
+*/
+INSERT INTO public.publicacion(
+            cedulaautor, titulopublicacion, urlcitacion, urlpublicacion, numerocitaciones)
+    VALUES ('11356034', 'Titulo de la publicacion2', 'http://dhcvhzvgvgvgvz.com', 'http://aquiseencuentra.com', 50);
+
+INSERT INTO public.publicacion(
+            cedulaautor, titulopublicacion, urlcitacion, urlpublicacion, numerocitaciones)
+    VALUES ('11356034', 'Titulo de la publicacion1', 'http://dhcvhzvgvgvgvz.com', 'http://aquiseencuentra.com', 100);
+
+INSERT INTO public.publicacion(
+            cedulaautor, titulopublicacion, urlcitacion, urlpublicacion, numerocitaciones)
+    VALUES ('1515515', 'Titulo de la publicacion2', 'http://dhcvhzvgvgvgvz.com', 'http://aquiseencuentra.com', 75);
+
+INSERT INTO public.publicacion(
+            cedulaautor, titulopublicacion, urlcitacion, urlpublicacion, numerocitaciones)
+    VALUES ('1515515', 'Titulo de la publicacion3', 'http://dhcvhzvgvgvgvz.com', 'http://aquiseencuentra.com', 500);
+
+
 
 
 -- Table: public.citacion
@@ -300,7 +412,7 @@ WITH (
 );
 ALTER TABLE public.titulo
   OWNER TO postgres;
-
+/*
 INSERT INTO public.titulo(
             tipo, descripcion, nivel, universidad)
     VALUES ('Licenciado', 'Licenciado en Computacion','nivel', 'Universidad de Carabobo');
@@ -308,7 +420,22 @@ INSERT INTO public.titulo(
 INSERT INTO public.titulo(
             tipo, descripcion, nivel, universidad)
     VALUES ('Ingeniero', 'Ingeniero de Sistemas','nivel', 'Universidad de Carabobo');
+*/
+INSERT INTO public.titulo(
+            cedulaautor, nomtitulo, nivel)
+    VALUES ('11356034', 'Licenciado en Computacion', 'Maestria');
 
+INSERT INTO public.titulo(
+            cedulaautor, nomtitulo, nivel)
+    VALUES ('11356034', 'Ingeniera', 'Doctorado');
+
+INSERT INTO public.titulo(
+            cedulaautor, nomtitulo, nivel)
+    VALUES ('1515515', 'Licenciado en Computacion', 'Doctorado');
+
+INSERT INTO public.titulo(
+            cedulaautor, nomtitulo, nivel)
+    VALUES ('226555', 'Ingeniera', 'Licenciatura');
 --RELACIONES
 
 INSERT INTO public.docente_facultad(

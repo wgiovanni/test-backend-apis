@@ -303,3 +303,6 @@ INSERT INTO public.eguc_voluntariado(
 INSERT INTO public.eguc_voluntariado(
             organizacion, descripcion, causa, egresado_id)
     VALUES ('Organizacion3', 'descripcion', 'una causa ahi2', 1);
+INSERT INTO public.eguc_voluntariado(
+            organizacion, descripcion, causa, egresado_id)
+    VALUES ('Organizacion4', 'descripcion', 'una causa ahi4', 4);

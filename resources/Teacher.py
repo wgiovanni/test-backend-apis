@@ -15,71 +15,40 @@ class TeacherInsertInitial(BD, Resource):
         try:
             # consultar docente
             resultTeacher = self.queryAll(dedent("""\
-                SELECT d.cedula, d.nombre, d.apellido, d.correo, d.grado, d.area_trabajo, d.sexo, d.nacionalidad, e.nombre AS escalafon
-                FROM docente AS d 
-                INNER JOIN escalafon AS e
-                ON (e.id = d.id_escalafon)"""))
+                SELECT cedula, primernombre, primerapellido, correo, areadeinvestigacion, 
+                sexo, nacionalidad, segundonombre, segundoapellido, facultad, tipo, escalafon
+                FROM docente"""))
             
-            # consultar facultad
-            resultfaculty = self.queryAll(dedent("""SELECT nombre FROM facultad"""))
-
-            # consultar escalafon
-            resultScale = self.queryAll(dedent("""SELECT nombre FROM escalafon"""))
-
             #consultar publicaciones
-            resultPublication = self.queryAll(dedent("""SELECT id AS codigo, tipo, autor, titulo, fecha, revista FROM publicacion"""))
-            publicationList = []
-            for row in resultPublication:
-                row['fecha'] = row['fecha'].strftime('%Y-%m-%d')
-                publicationList.append(row)
-            resultPublication = publicationList
+            resultPublication = self.queryAll(dedent("""\
+            SELECT id as codigo, cedulaautor, titulopublicacion, urlcitacion, urlpublicacion, numerocitaciones
+            FROM public.publicacion"""))
 
-            # consultar relaciones
-            resultRelationship = self.queryAll(dedent("""\
-                SELECT d.cedula AS docente, p.id AS publicacion
-                FROM docente AS d
-                INNER JOIN docente_publicacion AS dp
-                ON (dp.id_docente = d.id)
-                INNER JOIN publicacion AS p
-                ON (dp.id_publicacion = p.id)"""))
-            
-            # consultas para obtener las citas por cada publicacion
-            resultCitation = self.queryAll(dedent("""\
-                SELECT p.id AS publicacion, COUNT(c.id) AS citas
-                FROM publicacion AS p
-                INNER JOIN publicacion_citacion AS pc
-                ON (pc.id_publicacion = p.id)
-                INNER JOIN citacion AS c
-                ON (c.id = pc.id_citacion)
-                GROUP BY p.id"""))
-            
-            for r1 in resultCitation:
-                for r2 in resultRelationship:
-                    if r1['publicacion'] == r2['publicacion']:
-                        r2['citas'] = r1['citas']
-            
-            resultTeacherFaculty = self.queryAll(dedent("""\
-                SELECT d.cedula AS docente, f.nombre AS facultad
-                FROM docente AS d
-                INNER JOIN docente_facultad AS df
-                ON (d.id = df.id_docente)
-                INNER JOIN facultad AS f
-                ON (df.id_facultad = f.id)"""))
+            resultOtherStudio = self.queryAll(dedent("""\
+            SELECT id as codigo, cedulaautor, nomtitulo
+            FROM public.otro_estudio"""))
 
-            for r1 in resultTeacherFaculty:
-                for r2 in resultRelationship:
-                    if r1['docente'] == r2['docente']:
-                        r2['facultad'] = r1['facultad']
+            resultPrize = self.queryAll(dedent("""\
+            SELECT id as codigo, nombre, cedulaautor
+            FROM public.premio"""))
 
-            
+            resultProject = self.queryAll(dedent("""\
+            SELECT id as codigo, cedulaautor, titulo
+            FROM public.proyecto"""))
+
+            resultTitle = self.queryAll(dedent("""\
+            SELECT id as codigo, cedulaautor, nomtitulo, nivel
+            FROM public.titulo"""))
 
             response = {
                 "dim-docente": {"items": resultTeacher},
-                "dim-facultad": {"items": resultfaculty},
-                "dim-publicacion": {"items": resultPublication},
-                "dim-escalafon": {"items": resultScale}, 
-                "hechos-docente-publicacion": {"items": resultRelationship},
-                "hechos-docente-facultad": {"items": resultTeacherFaculty}
+                "dim-docente-otro-estudio": {"items": resultOtherStudio},
+                "dim-docente-publicacion": {"items": resultPublication},
+                "dim-docente-proyecto": {"items": resultProject},
+                "dim-docente-titulo": {"items": resultTitle},
+                "dim-docente-premio": {"items": resultPrize}  
+                #"hechos-docente-publicacion": {"items": resultRelationship},
+                #"hechos-docente-facultad": {"items": resultTeacherFaculty}
             }  
         except DatabaseError as e:
             abort(500, message="{0}:{1}".format(e.__class__.__name__, e.__str__()))
@@ -96,80 +65,42 @@ class TeacherUpdate(BD, Resource):
 
         try:
             date_update = datetime.strptime(date_update, '%Y-%m-%d %H:%M:%S')
-            print(date_update)
-
-            # consultar docente
+             # consultar docente
             resultTeacher = self.queryAll(dedent("""\
-                SELECT d.cedula, d.nombre, d.apellido, d.correo, d.grado, d.area_trabajo, d.sexo, d.nacionalidad, e.nombre AS escalafon
-                FROM docente AS d 
-                INNER JOIN escalafon AS e
-                ON (e.id = d.id_escalafon) 
-                WHERE d.fecha_actualizacion >= %s"""), [date_update])
+                SELECT cedula, primernombre, primerapellido, correo, areadeinvestigacion, 
+                sexo, nacionalidad, segundonombre, segundoapellido, facultad, tipo, escalafon
+                FROM docente WHERE fecha_actualizacion >= %s"""), [date_update])
             
-            # consultar facultad
-            resultfaculty = self.queryAll(dedent("""SELECT nombre FROM facultad WHERE fecha_actualizacion >= %s"""), [date_update])
-
-            # consultar escalafon
-            resultScale = self.queryAll(dedent("""SELECT nombre FROM escalafon WHERE fecha_actualizacion >= %s"""), [date_update])
-
             #consultar publicaciones
             resultPublication = self.queryAll(dedent("""\
-                SELECT id AS codigo, tipo, autor, titulo, fecha, revista 
-                FROM publicacion
-                WHERE fecha_actualizacion >= %s"""),[date_update])
+            SELECT cedulaautor, titulopublicacion, urlcitacion, urlpublicacion, numerocitaciones
+            FROM public.publicacion WHERE fecha_actualizacion >=  %s"""), [date_update])
 
-            publicationList = []
-            for row in resultPublication:
-                row['fecha'] = row['fecha'].strftime('%Y-%m-%d')
-                publicationList.append(row)
-            resultPublication = publicationList
+            resultOtherStudio = self.queryAll(dedent("""\
+            SELECT cedulaautor, nomtitulo
+            FROM public.otro_estudio WHERE fecha_actualizacion >=  %s"""), [date_update])
 
-            # consultar relaciones
-            resultRelationship = self.queryAll(dedent("""\
-                SELECT d.cedula AS docente, p.id AS publicacion
-                FROM docente AS d
-                INNER JOIN docente_publicacion AS dp
-                ON (dp.id_docente = d.id)
-                INNER JOIN publicacion AS p
-                ON (dp.id_publicacion = p.id)"""))
-            
-            # consultas para obtener las citas por cada publicacion
-            resultCitation = self.queryAll(dedent("""\
-                SELECT p.id AS publicacion, COUNT(c.id) AS citas
-                FROM publicacion AS p
-                INNER JOIN publicacion_citacion AS pc
-                ON (pc.id_publicacion = p.id)
-                INNER JOIN citacion AS c
-                ON (c.id = pc.id_citacion)
-                GROUP BY p.id"""))
-            
-            for r1 in resultCitation:
-                for r2 in resultRelationship:
-                    if r1['publicacion'] == r2['publicacion']:
-                        r2['citas'] = r1['citas']
-            
-            resultTeacherFaculty = self.queryAll(dedent("""\
-                SELECT d.cedula AS docente, f.nombre AS facultad
-                FROM docente AS d
-                INNER JOIN docente_facultad AS df
-                ON (d.id = df.id_docente)
-                INNER JOIN facultad AS f
-                ON (df.id_facultad = f.id)"""))
+            resultPrize = self.queryAll(dedent("""\
+            SELECT nombre, cedulaautor
+            FROM public.premio WHERE fecha_actualizacion >=  %s"""), [date_update])
 
-            for r1 in resultTeacherFaculty:
-                for r2 in resultRelationship:
-                    if r1['docente'] == r2['docente']:
-                        r2['facultad'] = r1['facultad']
+            resultProject = self.queryAll(dedent("""\
+            SELECT cedulaautor, titulo
+            FROM public.proyecto WHERE fecha_actualizacion >=  %s"""), [date_update])
 
-            
+            resultTitle = self.queryAll(dedent("""\
+            SELECT cedulaautor, nomtitulo, nivel
+            FROM public.titulo WHERE fecha_actualizacion >=  %s"""), [date_update])
 
             response = {
                 "dim-docente": {"items": resultTeacher},
-                "dim-facultad": {"items": resultfaculty},
+                "dim-otro-estudio": {"items": resultOtherStudio},
                 "dim-publicacion": {"items": resultPublication},
-                "dim-escalafon": {"items": resultScale}, 
-                "hechos-docente-publicacion": {"items": resultRelationship},
-                "hechos-docente-facultad": {"items": resultTeacherFaculty}
+                "dim-proyecto": {"items": resultProject},
+                "dim-titulo": {"items": resultTitle},
+                "dim-premio": {"items": resultPrize}  
+                #"hechos-docente-publicacion": {"items": resultRelationship},
+                #"hechos-docente-facultad": {"items": resultTeacherFaculty}
             }  
 
         except DatabaseError as e:

@@ -21,8 +21,11 @@ class StudentInsertInitial(BD, Resource):
 
             # consultar estudiantes
             resultStudent = self.queryAll(dedent("""\
-            SELECT cedula, nacionalidad, nombre, apellido, sexo, fecha_nacimiento, telefono1, telefono2, correo, edo_procedencia 
-            FROM estudiante"""))
+            SELECT e.cedula, e.nacionalidad, e.nombre, e.apellido, e.sexo, e.fecha_nacimiento, 
+            e.telefono1, e.telefono2, e.correo, e.edo_procedencia, e.etnia, e.discapacidad, s.status, tipo
+            FROM estudiante AS e
+            INNER JOIN estatusestudiante AS s 
+            ON (e.id_statusestudiante = s.id)"""))
             studentList = []
             for row in resultStudent:
                 row['fecha_nacimiento'] = row['fecha_nacimiento'].strftime('%Y-%m-%d')
@@ -68,9 +71,12 @@ class StudentUpdate(BD, Resource):
 
             # consultar estudiantes
             resultStudent = self.queryAll(dedent("""\
-            SELECT cedula, nacionalidad, nombre, apellido, sexo, fecha_nacimiento, telefono1, telefono2, correo, edo_procedencia 
-            FROM estudiante
-            WHERE fecha_actualizacion >= %s"""), [date_update])
+            SELECT e.cedula, e.nacionalidad, e.nombre, e.apellido, e.sexo, e.fecha_nacimiento, 
+            e.telefono1, e.telefono2, e.correo, e.edo_procedencia, e.etnia, e.discapacidad, s.status, tipo
+            FROM estudiante AS e
+            INNER JOIN estatusestudiante AS s 
+            ON (e.id_statusestudiante = s.id)
+            WHERE e.fecha_actualizacion >= %s"""), [date_update])
             studentList = []
             for row in resultStudent:
                 row['fecha_nacimiento'] = row['fecha_nacimiento'].strftime('%Y-%m-%d')
