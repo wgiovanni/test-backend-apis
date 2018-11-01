@@ -73,32 +73,32 @@ class TeacherUpdate(BD, Resource):
             
             #consultar publicaciones
             resultPublication = self.queryAll(dedent("""\
-            SELECT cedulaautor, titulopublicacion, urlcitacion, urlpublicacion, numerocitaciones
+            SELECT id As codigo, cedulaautor, titulopublicacion, urlcitacion, urlpublicacion, numerocitaciones
             FROM public.publicacion WHERE fecha_actualizacion >=  %s"""), [date_update])
 
             resultOtherStudio = self.queryAll(dedent("""\
-            SELECT cedulaautor, nomtitulo
+            SELECT id As codigo, cedulaautor, nomtitulo
             FROM public.otro_estudio WHERE fecha_actualizacion >=  %s"""), [date_update])
 
             resultPrize = self.queryAll(dedent("""\
-            SELECT nombre, cedulaautor
+            SELECT id As codigo, nombre, cedulaautor
             FROM public.premio WHERE fecha_actualizacion >=  %s"""), [date_update])
 
             resultProject = self.queryAll(dedent("""\
-            SELECT cedulaautor, titulo
+            SELECT id As codigo, cedulaautor, titulo
             FROM public.proyecto WHERE fecha_actualizacion >=  %s"""), [date_update])
 
             resultTitle = self.queryAll(dedent("""\
-            SELECT cedulaautor, nomtitulo, nivel
+            SELECT id As codigo, cedulaautor, nomtitulo, nivel
             FROM public.titulo WHERE fecha_actualizacion >=  %s"""), [date_update])
 
             response = {
                 "dim-docente": {"items": resultTeacher},
-                "dim-otro-estudio": {"items": resultOtherStudio},
-                "dim-publicacion": {"items": resultPublication},
-                "dim-proyecto": {"items": resultProject},
-                "dim-titulo": {"items": resultTitle},
-                "dim-premio": {"items": resultPrize}  
+                "dim-docente-otro-estudio": {"items": resultOtherStudio},
+                "dim-docente-publicacion": {"items": resultPublication},
+                "dim-docente-proyecto": {"items": resultProject},
+                "dim-docente-titulo": {"items": resultTitle},
+                "dim-docente-premio": {"items": resultPrize}  
                 #"hechos-docente-publicacion": {"items": resultRelationship},
                 #"hechos-docente-facultad": {"items": resultTeacherFaculty}
             }  
