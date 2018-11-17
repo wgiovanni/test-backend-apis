@@ -15,12 +15,12 @@ class GraduateInsertInitial(BD, Resource):
         try:
             # consultar egresado
             resultGraduate = self.queryAll(dedent("""\
-            SELECT "nombreUsuario", "primerNombre", "segundoNombre", "primerApellido", "segundoApellido", descripcion, intereses, email, telefono, identificacion
-            FROM eguc_egresado"""))
+            SELECT id as codigo, "nombreCertificacion", descripcion, "urlCertificacion", egresado_id
+            FROM public.\"EGUC_certificacion\""""))   
 
             resultStudiosUc = self.queryAll(dedent("""\
             SELECT eu.id AS codigo, eu.facultad, eu.carrera, eu."anhoGrado", eu.titulo, eu."urlCertificacion"
-            FROM eguc_estudiosuc AS eu"""))
+            FROM public.\"EGUC_estudiosuc\" AS eu"""))
             studiosUcList = []
             for row in resultStudiosUc:
                 row['anhogrado'] = row['anhogrado'].strftime('%Y-%m-%d')
@@ -28,9 +28,9 @@ class GraduateInsertInitial(BD, Resource):
             resultStudiosUc = studiosUcList
 
             graduate = self.queryAll(dedent("""\
-                SELECT id, "nombreUsuario", "primerNombre", "segundoNombre", "primerApellido", 
+                SELECT "idUser", "nombreUsuario", "primerNombre", "segundoNombre", "primerApellido", 
                 "segundoApellido", descripcion, intereses, foto, email, telefono, identificacion
-                FROM public.eguc_egresado;"""))
+                FROM public.\"EGUC_egresado\""""))
 
 
             resultRelationshipGraduateStudiosUc = []
@@ -38,15 +38,15 @@ class GraduateInsertInitial(BD, Resource):
                 #print(r)
                 resultRelationship = self.queryAll(dedent("""\
                     SELECT eu.id AS codigo, eu.facultad, eu.carrera
-                    FROM eguc_estudiosuc AS eu
-                    WHERE eu.egresado_id = %s"""),[r['id']])
+                    FROM public.\"EGUC_estudiosuc\" AS eu
+                    WHERE eu.egresado_id = %s"""),[r['iduser']])
 
                 item = {"egresado": r['nombreusuario'], "estudiosuc": resultRelationship}
                 resultRelationshipGraduateStudiosUc.append(item)
             
             resultCertification = self.queryAll(dedent("""\
                 SELECT id AS codigo, "nombreCertificacion", descripcion, "urlCertificacion"
-                FROM public.eguc_certificacion"""))
+                FROM public.\"EGUC_certificacion\""""))
 
             resultRelationshipGraduateCertification = []
             resultRelationship = []
@@ -54,15 +54,15 @@ class GraduateInsertInitial(BD, Resource):
                 #print(r)
                 resultRelationship = self.queryAll(dedent("""\
                     SELECT id AS codigo
-                    FROM public.eguc_certificacion 
-                    WHERE egresado_id = %s"""),[r['id']])
+                    FROM public.\"EGUC_certificacion\" 
+                    WHERE egresado_id = %s"""),[r['iduser']])
 
                 item = {"egresado": r['nombreusuario'], "certificacion": resultRelationship}
                 resultRelationshipGraduateCertification.append(item)
 
             resultCourse = self.queryAll(dedent("""\
                 SELECT id AS codigo, nombre, url
-                FROM public.eguc_cursos"""))
+                FROM public.\"EGUC_cursos\""""))
 
             resultRelationshipGraduateCourse = []
             resultRelationship = []
@@ -70,15 +70,15 @@ class GraduateInsertInitial(BD, Resource):
                 #print(r)
                 resultRelationship = self.queryAll(dedent("""\
                     SELECT id AS codigo
-                    FROM public.eguc_cursos
-                    WHERE egresado_id = %s"""),[r['id']])
+                    FROM public.\"EGUC_cursos\"
+                    WHERE egresado_id = %s"""),[r['iduser']])
 
                 item = {"egresado": r['nombreusuario'], "cursos": resultRelationship}
                 resultRelationshipGraduateCourse.append(item)
             
             resultEducation = self.queryAll(dedent("""\
                 SELECT id AS codigo, instituto, "campoEstudio", "tituloObtenido", "urlCertificacion"
-                FROM public.eguc_educacion;"""))
+                FROM public.\"EGUC_educacion\""""))
 
             resultRelationshipGraduateEducation = []
             resultRelationship = []
@@ -86,15 +86,15 @@ class GraduateInsertInitial(BD, Resource):
                 #print(r)
                 resultRelationship = self.queryAll(dedent("""\
                     SELECT id AS codigo
-                    FROM public.eguc_educacion
-                    WHERE egresado_id = %s"""),[r['id']])
+                    FROM public.\"EGUC_educacion\"
+                    WHERE egresado_id = %s"""),[r['iduser']])
 
                 item = {"egresado": r['nombreusuario'], "educacion": resultRelationship}
                 resultRelationshipGraduateEducation.append(item)
 
             resultPatents = self.queryAll(dedent("""\
                 SELECT id AS codigo, titulo, descripcion, numero, inventores, fecha, url
-                FROM public.eguc_patentes"""))
+                FROM public.\"EGUC_patentes\""""))
             patentsList = []
             for row in resultPatents:
                 row['fecha'] = row['fecha'].strftime('%Y-%m-%d')
@@ -107,15 +107,15 @@ class GraduateInsertInitial(BD, Resource):
                 #print(r)
                 resultRelationship = self.queryAll(dedent("""\
                     SELECT id AS codigo
-                    FROM public.eguc_patentes
-                    WHERE egresado_id = %s"""),[r['id']])
+                    FROM public.\"EGUC_patentes\"
+                    WHERE egresado_id = %s"""),[r['iduser']])
 
                 item = {"egresado": r['nombreusuario'], "patentes": resultRelationship}
                 resultRelationshipGraduatePatents.append(item)
 
             resultJobs = self.queryAll(dedent("""\
                 SELECT id AS codigo, "nombreEmpresa", cargo, descripcion
-                FROM public.eguc_trabajos"""))
+                FROM public.\"EGUC_trabajos\""""))
             
             resultRelationshipGraduateJobs = []
             resultRelationship = []
@@ -123,15 +123,15 @@ class GraduateInsertInitial(BD, Resource):
                 #print(r)
                 resultRelationship = self.queryAll(dedent("""\
                     SELECT id AS codigo
-                    FROM public.eguc_trabajos
-                    WHERE egresado_id = %s"""),[r['id']])
+                    FROM public.\"EGUC_trabajos\"
+                    WHERE egresado_id = %s"""),[r['iduser']])
 
                 item = {"egresado": r['nombreusuario'], "trabajos": resultRelationship}
                 resultRelationshipGraduateJobs.append(item)
 
             resultVolunteering = self.queryAll(dedent("""\
                 SELECT id AS codigo, organizacion, descripcion, causa
-                FROM public.eguc_voluntariado"""))
+                FROM public.\"EGUC_voluntariado\""""))
 
             resultRelationshipGraduateVolunteering = []
             resultRelationship = []
@@ -139,8 +139,8 @@ class GraduateInsertInitial(BD, Resource):
                 #print(r)
                 resultRelationship = self.queryAll(dedent("""\
                     SELECT id AS codigo
-                    FROM public.eguc_voluntariado
-                    WHERE egresado_id = %s"""),[r['id']])
+                    FROM public.\"EGUC_voluntariado\"
+                    WHERE egresado_id = %s"""),[r['iduser']])
 
                 item = {"egresado": r['nombreusuario'], "voluntariado": resultRelationship}
                 resultRelationshipGraduateVolunteering.append(item)
