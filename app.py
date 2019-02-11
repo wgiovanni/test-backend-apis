@@ -49,8 +49,8 @@ class File(Resource):
 # estudiantes route
 api.add_resource(StudentInsertInitial, '/estudiantes')
 api.add_resource(StudentUpdate, '/estudiantes/<date_update>')
-api.add_resource(TeacherInsertInitial, '/profesores')
-api.add_resource(TeacherUpdate, '/profesores/<date_update>')
+api.add_resource(TeacherInsertInitial, '/docentes')
+api.add_resource(TeacherUpdate, '/docentes/<date_update>')
 api.add_resource(GraduateInsertInitial, '/egresados')
 api.add_resource(GraduateUpdate, '/egresados/<date_update>')
 api.add_resource(File, '/upload')
@@ -60,4 +60,4 @@ api.add_resource(File, '/upload')
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=int('8082'))
+    app.run(debug=True, port=int('8081'))

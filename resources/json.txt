@@ -1,0 +1,41 @@
+{
+    "dim-egresado": {
+        "items": [
+            {
+                "primernombre": "Genessis",
+                "primerapellido": "Jimenez",
+                "email": "gjimenez@gmail,com",
+                "telefono": "04127658802",
+                "identificacion": "2464987",
+                "codigo": 1
+            }
+        ]
+    },
+    "dim_trabajos": {
+        "items": [
+            {
+                "egresado": 1,
+                "codigo": 1
+                "nombreempresa": "Intelix",
+                "cargo": "Programador web",
+                "descripcion": "descripcion",
+                "url": "url",
+                "fecha": "2018-09-22",
+                "informacion": 1,
+                "laborando": true
+            }
+        ]
+    },
+    "dim-estudiosuc": {
+        "items": [
+            {
+                "egresado": 1,
+                "codigo": 1,
+                "facultad": "FACYT",
+                "anhogrado": "2018-07-24",
+                "titulo": "Licenciado en Computación",
+                "urlcertificacion": "url..."
+            }
+        ]
+    }
+}
